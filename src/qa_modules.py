@@ -1,9 +1,9 @@
-from openai import OpenAI
 import os
 import config
 from datetime import datetime
 import tiktoken
 import json
+from openai_client_factory import create_chat_client
 
 def estimate_tokens(text: str, model_name: str) -> int:
     """Use tiktoken to estimate token count"""
@@ -84,19 +84,16 @@ class GlobalLogManager:
 
 class BaseQA_deepseek_V3:
     def __init__(self):
+        self.client = create_chat_client("DEEPSEEK_V3")
+        self.model_name = os.environ.get("DEEPSEEK_V3_MODEL_NAME")
         self.qa_interface = self._setup_qa_interface()
         self._initialized = True
 
     def _setup_qa_interface(self):
         def get_deepseekV3_response(messages):
-            client = OpenAI(
-                api_key=os.environ.get("DEEPSEEK_V3_KEY"), 
-                base_url=os.environ.get("DEEPSEEK_V3_BASE_URL")
-            )
-
-            chat_completion = client.chat.completions.create(
+            chat_completion = self.client.chat.completions.create(
                 messages=messages,
-                model=os.environ.get("DEEPSEEK_V3_MODEL_NAME"),
+                model=self.model_name,
                 temperature=config.V3_temperature,
                 stream=False
             )
@@ -155,6 +152,8 @@ class QA_NoContext_deepseek_V3(BaseQA_deepseek_V3):
 
 class BaseQA_deepseek_R1:
     def __init__(self):
+        self.client = create_chat_client("DEEPSEEK_R1")
+        self.model_name = os.environ.get("DEEPSEEK_R1_MODEL_NAME")
         self.qa_interface = self._setup_qa_interface()
         self._initialized = True
         self.encoding = tiktoken.get_encoding("cl100k_base")
@@ -181,18 +180,10 @@ class BaseQA_deepseek_R1:
         #     }
 
         def get_response(messages):
-            client = OpenAI(
-                api_key=os.environ.get("DEEPSEEK_V3_KEY"),
-                base_url=os.environ.get("DEEPSEEK_V3_BASE_URL")
-            )
-
-            # Get model name for token estimation
-            model_name = os.environ.get("DEEPSEEK_R1_MODEL_NAME")
-            
             # ===== Stream request to get content =====
-            stream = client.chat.completions.create(
+            stream = self.client.chat.completions.create(
                 messages=messages,
-                model=model_name,
+                model=self.model_name,
                 temperature=config.R1_temperature,
                 stream=True
             )
@@ -211,11 +202,11 @@ class BaseQA_deepseek_R1:
             # ===== Estimate token usage =====
             # Estimate prompt tokens (serialize messages to string)
             prompt_str = json.dumps(messages, ensure_ascii=False)
-            prompt_tokens = estimate_tokens(prompt_str, model_name)
+            prompt_tokens = estimate_tokens(prompt_str, self.model_name)
             
             # Estimate completion tokens (actual returned content)
             completion_str = "".join(full_content)
-            completion_tokens = estimate_tokens(completion_str, model_name)
+            completion_tokens = estimate_tokens(completion_str, self.model_name)
 
             return {
                 "reasoning_content": "".join(reasoning_contents),

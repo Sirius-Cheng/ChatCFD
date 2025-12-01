@@ -1,0 +1,40 @@
+/*--------------------------------*- C++ -*----------------------------------*
+| =========                 |
+| \      /  F ield         | OpenFOAM: The OpenFOAM Foundation |
+|  \    /   O peration     | reactingFoam |
+|   \  /    A nd           |
+|    \/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volVectorField;
+    location    "0";
+    object      U;
+}
+
+dimensions      [0 1 -1 0 0 0 0];
+internalField   uniform (0 0 0);
+boundaryField
+{
+    velocity_inlet_air
+    {
+        type fixedValue;
+        value uniform (23.98 0 0);
+    }
+    velocity_inlet_nh3
+    {
+        type fixedValue;
+        value uniform (10 0 0); // assumed inlet velocity
+    }
+    pressure_outlet
+    {
+        type zeroGradient;
+    }
+    walls
+    {
+        type noSlip;
+        value uniform (0 0 0);
+    }
+}

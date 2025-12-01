@@ -26,6 +26,10 @@ OpenFOAM_path = ""
 
 OpenFOAM_tutorial_path = ""
 
+OpenFOAM_use_docker = False
+
+OpenFOAM_docker_exec = ""
+
 all_case_requirement_json = None
 
 all_case_dict = None
@@ -48,7 +52,7 @@ def convert_boundary_names_to_lowercase(data):
 
 global_target_case_dict = None
 
-# case_boundaries = []
+case_boundaries = []
 case_solver = None
 case_turbulence_type = "laminar"
 case_turbulece_model = "invalid"

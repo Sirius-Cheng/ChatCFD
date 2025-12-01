@@ -1,0 +1,14 @@
+dimensions      [0 0 0 0 0 0 0];
+internalField   uniform 0.05;
+boundaryField
+{
+    walls
+    {
+        type            noSlip;
+        value           uniform 0.05;
+    }
+    defaultFaces
+    {
+        type            slip;
+    }
+}

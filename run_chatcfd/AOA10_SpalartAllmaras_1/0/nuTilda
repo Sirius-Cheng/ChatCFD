@@ -1,0 +1,32 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      nuTilda;
+}
+
+dimensions      [0 2 -1 0 0 0 0];
+internalField   uniform 0.01;
+boundaryField
+{
+    walls
+    {
+        type            fixedValue;
+        value           uniform 0.01;
+    }
+    velocity_inlet_air
+    {
+        type            fixedValue;
+        value           uniform 0.01;
+    }
+    velocity_inlet_nh3
+    {
+        type            fixedValue;
+        value           uniform 0.01;
+    }
+    pressure_outlet
+    {
+        type            zeroGradient;
+    }
+}

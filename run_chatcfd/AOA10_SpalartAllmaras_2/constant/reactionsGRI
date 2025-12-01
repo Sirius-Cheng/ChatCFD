@@ -1,0 +1,16 @@
+FoamFile
+{
+  version     2.0;
+  format      ascii;
+  class       reactionThermo;
+  object      reactionsGRI;
+}
+
+reactions
+(
+  {
+    species       1;
+    reactionType  "pFR";
+    reactionIndex 1;
+  }
+);

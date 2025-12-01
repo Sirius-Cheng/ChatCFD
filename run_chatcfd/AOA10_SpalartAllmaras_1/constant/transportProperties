@@ -1,0 +1,17 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       transportProperties;
+    object      transportProperties;
+}
+
+// Write transport properties such as diffusivities for species here
+
+// Example:
+// h2o
+// {
+//     transportModel  Newtonian;
+//     nu              1e-6;
+//     D               1e-5;
+// }

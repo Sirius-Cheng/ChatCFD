@@ -1,0 +1,17 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       reactionThermoModel;
+    object      reactionsGRI;
+}
+
+reactionMechanism
+{
+    reactions       reactions;
+}
+
+reaction
+{
+    // reactions details omitted for brevity
+}

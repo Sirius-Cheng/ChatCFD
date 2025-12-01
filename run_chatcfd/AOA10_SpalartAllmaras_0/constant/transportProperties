@@ -1,0 +1,15 @@
+{
+    "mu": {
+        "values": [
+            {"phase": "air", "value": 1.7894e-05},
+            {"phase": "NH3", "value": 1.34e-05}
+        ]
+    },
+    "k": {
+        "values": [
+            {"phase": "air", "value": 0.0257},
+            {"phase": "NH3", "value": 0.17}
+        ]
+    },
+    "Pr": 0.7
+}

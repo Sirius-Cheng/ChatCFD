@@ -1,0 +1,7 @@
+simulationType  RAS;
+RAS
+{
+    RASModel        SpalartAllmaras;
+    turbulence      on;
+    printCoeffs     on;
+}

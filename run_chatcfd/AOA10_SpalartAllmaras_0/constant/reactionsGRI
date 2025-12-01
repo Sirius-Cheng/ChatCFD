@@ -1,0 +1,11 @@
+/*
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      reactionsGRI;
+}
+
+// Reaction data placeholder for GRI mechanisms
+// Define detailed reaction parameters here as needed

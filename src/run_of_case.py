@@ -1,4 +1,5 @@
 import os
+import shlex
 import subprocess
 from PyFoam.RunDictionary.ParsedParameterFile import ParsedParameterFile
 from PyFoam.Applications.Decomposer import Decomposer
@@ -11,13 +12,34 @@ import config
 def convert_mesh(case_path, grid_path):
     """Convert Fluent mesh to OpenFOAM format"""
     try:
-        command = [
-            "fluentMeshToFoam",
-            "-case",
-            case_path,
-            grid_path
-        ]
-        subprocess.run(command, check=True)
+        # Legacy host command kept for reference:
+        # command = [
+        #     "fluentMeshToFoam",
+        #     "-case",
+        #     case_path,
+        #     grid_path
+        # ]
+        # subprocess.run(command, check=True)
+        fluent_cmd = f'fluentMeshToFoam -case {shlex.quote(case_path)} {shlex.quote(grid_path)}'
+        if getattr(config, "OpenFOAM_use_docker", False):
+            docker_exec = getattr(config, "OpenFOAM_docker_exec", "").strip()
+            if not docker_exec:
+                raise RuntimeError("OpenFOAM_docker_exec is not configured while docker mode is enabled.")
+            docker_command = f'{docker_exec} "{fluent_cmd}"'
+            subprocess.run(
+                docker_command,
+                shell=True,
+                executable="/usr/bin/bash",
+                check=True
+            )
+        else:
+            command = [
+                "fluentMeshToFoam",
+                "-case",
+                case_path,
+                grid_path
+            ]
+            subprocess.run(command, check=True)
         print("Mesh conversion completed successfully")
         config.mesh_convert_success = True
         return True
@@ -117,15 +139,30 @@ def case_run(case_path):
 
     running_log = f'{case_path}/case_run.log'
 
-    command = f'{solver} -case {case_path} > {running_log}'
-    # command = f'ls'
+    # command = f'{solver} -case {case_path} > {running_log}'
+    # output = subprocess.run(
+    #     command,
+    #     shell=True,
+    #     executable="/usr/bin/bash",
+    #     text=True,
+    #     capture_output=True
+    #     )
+    solver_command = f'{solver} -case {shlex.quote(case_path)} > {shlex.quote(running_log)}'
+    if getattr(config, "OpenFOAM_use_docker", False):
+        docker_exec = getattr(config, "OpenFOAM_docker_exec", "").strip()
+        if not docker_exec:
+            raise RuntimeError("OpenFOAM_docker_exec is not configured while docker mode is enabled.")
+        command = f'{docker_exec} "{solver_command}"'
+    else:
+        command = solver_command
+
     output = subprocess.run(
         command,
         shell=True,
         executable="/usr/bin/bash",
         text=True,
-        capture_output=True  # get stdout and stderr
-        )
+        capture_output=True
+    )
     
     run_case_error = output.stderr
     run_case_output = output.stdout

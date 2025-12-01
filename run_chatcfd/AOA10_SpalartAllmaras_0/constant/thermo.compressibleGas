@@ -1,0 +1,18 @@
+{
+    "type": "compressibleGas",
+    "mixture": {
+        "species": ["O2", "N2", "CO2", "H2O"],
+        "molecularWeight": [32, 28, 44, 18],
+        "specieEnthalpy": [0, 0, 0, 0],
+        "specieCp": [
+            {"species": "O2", "value": 918},
+            {"species": "N2", "value": 1000},
+            {"species": "CO2", "value": 846},
+            {"species": "H2O", "value": 4182}
+        ]
+    },
+    "thermoProperties": {
+        "Tref": 300,
+        "pRef": 101325
+    }
+}

@@ -3,20 +3,17 @@ import faiss
 import numpy as np
 from sentence_transformers import SentenceTransformer
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from openai import OpenAI
 from pdfplumber.utils import within_bbox
 import re
 import tiktoken
 from datetime import datetime
 import qa_modules, config, os
+from openai_client_factory import create_chat_client
 
 class CFDCaseExtractor:
     def __init__(self, model_name='sentence-transformers/all-mpnet-base-v2'):
         self.embedder = SentenceTransformer(model_name)
-        self.client = OpenAI(
-            api_key=os.environ.get("DEEPSEEK_R1_KEY"), 
-            base_url=os.environ.get("DEEPSEEK_R1_BASE_URL")
-        )
+        self.client = create_chat_client("DEEPSEEK_R1")
         self.gpt_model = os.environ.get("DEEPSEEK_R1_MODEL_NAME")
         self.index = None
         self.chunks = []

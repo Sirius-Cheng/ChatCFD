@@ -1,0 +1,45 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       thermophysicalProperties;
+    object      thermophysicalProperties;
+}
+thermoType
+{
+    type            hePsiThermo;
+    mixture         simpleMixing;
+    transport       transportModel  Newtonian;
+    thermo          specSpecificHeat;
+    energy          sensibleEnthalpy;
+    equationOfState perfectGas;
+    speciation      { type species; source simple; }
+}
+species
+{
+    N2
+    {
+        moleFraction  0.78;
+        Cp            1040;
+    }
+    O2
+    {
+        moleFraction  0.21;
+        Cp            918;
+    }
+    CH4
+    {
+        moleFraction  0.01;
+        Cp            22228;
+    }
+    NH3
+    {
+        moleFraction  0;
+        Cp            4800;
+    }
+    H2O
+    {
+        moleFraction  0;
+        Cp            4182;
+    }
+}

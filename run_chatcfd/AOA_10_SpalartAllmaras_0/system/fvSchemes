@@ -1,0 +1,21 @@
+{
+    'ddtSchemes': {
+        'default': 'steadyState';
+    },
+    'divSchemes': {
+        'default': 'Gauss linearUpwind grad';
+        'div(phi,U)': 'bounded Gauss linearUpwind scheme';
+        'div(phi,k)': 'bounded Gauss linearUpwind scheme';
+        'div(phi,epsilon)': 'bounded Gauss linearUpwind scheme';
+        'div(phi,nuTilda)': 'bounded Gauss linearUpwind scheme';
+    },
+    'laplacianSchemes': {
+        'default': 'Gauss linear limited';
+    },
+    'interpolationSchemes': {
+        'default': 'linear';
+    },
+    'snGradSchemes': {
+        'default': 'limited limited';
+    }
+}

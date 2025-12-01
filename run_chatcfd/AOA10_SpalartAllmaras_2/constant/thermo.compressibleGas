@@ -1,0 +1,28 @@
+FoamFile
+{
+  version     2.0;
+  format      ascii;
+  class       thermophysicalModel;
+  object      thermo.compressibleGas;
+}
+
+molecularWeights
+(
+  28.0134
+  44.01
+  18.01528
+  2.016
+); // N2, CO2, H2O, NH3
+
+thermoType
+{
+  type            hePsiThermo;
+  mixture         pureMixture;
+  transport       const;
+  thermo          law table;
+  equationOfState perfectGas;
+  species         N2 CO2 H2O NH3;
+  energy          sensibleEnthalpy;
+  Cp            1005;
+  Hf              0;
+}

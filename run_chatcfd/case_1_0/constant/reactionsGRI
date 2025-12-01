@@ -1,0 +1,8 @@
+/*--------------------------------*- C++ -*----------------------------------*
+| =========                 |
+| \      /  F ield         | OpenFOAM: The OpenFOAM Foundation |
+|  \    /   O peration     | reactingFoam |
+|   \  /    A nd           |
+|    \/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+// Placeholder: Define detailed reactions if necessary. Empty for non-reacting case.
