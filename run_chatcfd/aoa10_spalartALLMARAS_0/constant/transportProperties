@@ -1,0 +1,14 @@
+/*
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      transportProperties;
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// Gas properties for all species
+// User must specify the correct molecular weights, viscosities, etc.
+

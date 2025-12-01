@@ -1,0 +1,21 @@
+/zero/alphaEqn
+{
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      alphaEqn;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * // 
+dimensions      [0 0 0 0 0 0 0]; 
+internalField   uniform 0; 
+boundaryField
+{
+    alphaEqn
+    {
+        type            fixedValue;
+        value           uniform 0;
+    }
+}
+}

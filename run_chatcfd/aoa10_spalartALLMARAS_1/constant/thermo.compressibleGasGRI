@@ -1,0 +1,9 @@
+{
+    // Thermo properties for compressible gases (e.g., GRI model)
+    Tref            300;
+    Prandtl         0.7;
+    GasConstant     287;
+    Cp             1005;
+    cv             718;
+    gamma          1.4;
+}

@@ -1,6 +1,0 @@
-{
-    "turbulenceModel": "SpalartAllmaras",
-    "nu": {
-        "nuTilda": 0.0
-    }
-}

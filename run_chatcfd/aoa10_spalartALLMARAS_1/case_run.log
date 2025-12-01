@@ -1,0 +1,29 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2406                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _9bfe8264-20241212 OPENFOAM=2406 patch=241212 version=2406
+Arch   : "LSB;label=32;scalar=64"
+Exec   : reactingFoam -case /home/openfoam/case/v1/ChatCFD/run_chatcfd/aoa10_spalartALLMARAS_1
+Date   : Dec 01 2025
+Time   : 07:34:40
+Host   : b670b8fa4884
+PID    : 7819
+I/O    : uncollated
+Case   : /home/openfoam/case/v1/ChatCFD/run_chatcfd/aoa10_spalartALLMARAS_1
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+--> FOAM Warning : 
+    From static Foam::IOstreamOption::compressionType Foam::IOstreamOption::compressionEnum(const Foam::word&, compressionType)
+    in file db/options/IOstreamOption.C at line 189
+    Unknown compression specifier 'uncompressed' using compression off
+Create mesh for time = 0

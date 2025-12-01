@@ -1,0 +1,4 @@
+{
+    // Optional, if parallelization is used
+    method          scotch;
+}

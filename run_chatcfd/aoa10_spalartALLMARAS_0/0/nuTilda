@@ -1,0 +1,15 @@
+/*
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      nuTilda;
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// Initialize turbulence viscosity
+// Typical initial value for gas flow: 1e-5
+// Boundary conditions to be set in '0' directory
+
