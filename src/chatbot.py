@@ -59,7 +59,8 @@ class ChatBot:
             response = self.client.chat.completions.create(
                 model=self.model_name,
                 messages=[{"role": "system", "content": self.system_prompt}] + messages,
-                temperature=self.temperature
+                temperature=self.temperature,
+                extra_body={"chat_template_kwargs": {"enable_thinking": False}},
             )
             # Record token usage
             usage = response.usage
