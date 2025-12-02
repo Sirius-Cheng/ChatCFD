@@ -149,6 +149,17 @@ def read_files_to_dict(base_dir):
 
 def add_new_file(file_name):
 
+    file_name = (file_name or "").strip()
+
+    if not file_name or file_name.lower() == "no":
+        print("adding new file: skipped (no valid file name returned).")
+        return
+
+    valid_prefixes = ("0/", "system/", "constant/")
+    if not file_name.startswith(valid_prefixes):
+        print(f"adding new file: skipped (invalid path '{file_name}').")
+        return
+
     print(f"adding new file: {file_name}")
 
     file_path = f'{config.OUTPUT_PATH}/{file_name}'
