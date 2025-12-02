@@ -1,5 +1,4 @@
 import streamlit as st
-from openai import OpenAI
 import PyPDF2
 import io
 import json
@@ -12,6 +11,7 @@ from datetime import datetime
 import config, case_file_requirements, preprocess_OF_tutorial, set_config, main_run_chatcfd, qa_modules
 import pathlib
 import os
+from openai_client_factory import create_chat_client
 
 
 general_prompt = ''
@@ -19,10 +19,10 @@ general_prompt = ''
 
 class ChatBot:
     def __init__(self):
-        self.client = OpenAI(
-            api_key=os.environ.get("DEEPSEEK_R1_KEY"),
-            base_url=os.environ.get("DEEPSEEK_R1_BASE_URL")
-        )
+        # 与 chatbot_bak.py 保持一致：通过统一工厂函数创建 client，
+        # 使用 DEEPSEEK_R1_* 环境变量配置 Key / Base URL / API 版本等。
+        self.client = create_chat_client("DEEPSEEK_R1")
+        self.model_name = os.environ.get("DEEPSEEK_R1_MODEL_NAME")
         self.system_prompt = """You are an intelligent assistant capable of:
         1. Maintaining politeness and professionalism
         2. Remembering the context of the conversation
@@ -51,7 +51,8 @@ class ChatBot:
 
         try:
             response = self.client.chat.completions.create(
-                model=os.environ.get("DEEPSEEK_R1_MODEL_NAME"),
+                # 与 chatbot_bak.py 一样，从初始化时读取的模型名
+                model=self.model_name,
                 messages=[{"role": "system", "content": self.system_prompt}] + messages,
                 temperature=self.temperature
             )
