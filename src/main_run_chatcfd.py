@@ -10,6 +10,27 @@ test_case_name = None
 
 test_case_description = None
 
+
+def _extract_json_dict(text: str):
+    """Best-effort JSON parser that tolerates leading/trailing text."""
+    if not text:
+        return None
+    if isinstance(text, dict):
+        return text
+    try:
+        return json.loads(text)
+    except (TypeError, json.JSONDecodeError):
+        pass
+
+    start = text.find("{")
+    end = text.rfind("}")
+    if start == -1 or end == -1 or end <= start:
+        return None
+    try:
+        return json.loads(text[start : end + 1])
+    except json.JSONDecodeError:
+        return None
+
 def process_pdf_pdfplumber(file_path):
     text = ""
     tables = []
@@ -182,12 +203,16 @@ def main(file_name):
 
 
     pdf_chunk_response = pdf_chunk_ask()
-
     config.target_case_requirement_json = pdf_chunk_response
 
     preprocess_OF_tutorial.read_in_processed_merged_OF_cases()
 
-    config.global_files = json.loads(config.target_case_requirement_json)
+    parsed_case_files = _extract_json_dict(config.target_case_requirement_json)
+    if not parsed_case_files:
+        print("Error: model did not return valid JSON for required case files. Please adjust the prompt or retry.")
+        return
+
+    config.global_files = parsed_case_files
 
     # write the case files
     for key, value in config.global_files.items():
