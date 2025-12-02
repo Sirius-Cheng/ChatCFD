@@ -17,6 +17,25 @@ from openai_client_factory import create_chat_client
 general_prompt = ''
 
 
+def _extract_json_dict(text: str):
+    """Best-effort JSON parser that tolerates leading/trailing text."""
+    if not text:
+        return None
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        pass
+
+    start = text.find("{")
+    end = text.rfind("}")
+    if start == -1 or end == -1 or end <= start:
+        return None
+    try:
+        return json.loads(text[start : end + 1])
+    except json.JSONDecodeError:
+        return None
+
+
 class ChatBot:
     def __init__(self):
         self.client = create_chat_client("DEEPSEEK_R1")
@@ -544,7 +563,16 @@ def main():
             # Get assistant's response
             with st.chat_message("assistant"):
                 response = st.session_state.chatbot.get_response(st.session_state.messages)
-                config.all_case_dict = json.loads(response)
+                parsed_case_dict = _extract_json_dict(response)
+                if not parsed_case_dict:
+                    st.error("助手返回的内容不是有效的 JSON，请重试或调整描述。")
+                    st.session_state.messages.append({
+                        "role": "assistant",
+                        "content": response,
+                        "timestamp": datetime.now().isoformat()
+                    })
+                    return
+                config.all_case_dict = parsed_case_dict
 
                 qa = qa_modules.QA_NoContext_deepseek_R1()
 
