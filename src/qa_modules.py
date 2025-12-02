@@ -185,7 +185,8 @@ class BaseQA_deepseek_R1:
                 messages=messages,
                 model=self.model_name,
                 temperature=config.R1_temperature,
-                stream=True
+                stream=True,
+                extra_body={"chat_template_kwargs": {"enable_thinking": False}},
             )
 
             full_content = []
